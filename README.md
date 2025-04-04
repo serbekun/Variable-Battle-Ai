@@ -43,18 +43,19 @@ The AI uses a fully connected neural network with the following parameters:
 ## Project Structure
 ```
 Variable-Battle-Ai/
-│── cores/                # Core game logic and functions
-│   │── vbc.py            # Main game control functions
-│   │── vba.py            # Player and bot actions
+│── create_model          # folder where exist cod for lerning model
+│   │── create_model.py   # lerning model script with setting 
 │
 │── models/               # AI models and training data
-│   │── vb_model3.pth     # Trained model weights
+│   │── vb_model1.pth     # Trained model weights firts vesrion
+|   |── vb_model2.pth     # Trained model weights second version
 │
-│── logs/                 # Game log files for AI training
-│   │── game_log.json     # Log of all game sessions
-│
-│── main.py               # Main script to run the game
-│── requirements.txt      # Dependencies required for the project
+|── test_model_place/     # AI test script folder
+|   |── cores/
+|   |        |── vba.py   # game logick with all action function
+|   |        |── vbc.py   # game core with function for show status and cat limits
+|   |── vbm.py            # main fail what need to start for play with model
+|
 │── README.md             # Project documentation
 ```
 

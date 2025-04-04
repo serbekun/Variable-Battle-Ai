@@ -1,4 +1,3 @@
-```markdown
 # Variable Battle AI
 
 Variable Battle AI is a neural network-powered bot designed to play the text-based game Variable Battle. It utilizes PyTorch for deep learning and logs gameplay data for further training and analysis.
@@ -15,7 +14,6 @@ Variable Battle AI is a neural network-powered bot designed to play the text-bas
    ```sh
    git clone https://github.com/serbekun/Variable-Battle-Ai.git
    cd Variable-Battle-Ai
-   ```
 2. Install dependencies:
    ```sh
    pip install -r requirements.txt

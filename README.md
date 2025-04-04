@@ -28,10 +28,7 @@ Variable Battle AI is a neural network-powered bot designed to play the text-bas
 - ```/test_model_place/cores```
 - then star script ```/test_model_place/vbm.py```
 - use ```python3 vbm.py```
-
-```sh
-python main.py
-```
+- 
 During the game, choose actions using the corresponding keys:
 - `1` or `a` - Attack
 - `2` or `h` - Heal

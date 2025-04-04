@@ -33,7 +33,7 @@ Variable Battle AI is a neural network-powered bot designed to play the text-bas
   /test_model_place/vbm.py
   ```
 - use
-- ```sh
+  ```sh
   python3 vbm.py
   ```
  

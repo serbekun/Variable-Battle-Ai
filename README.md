@@ -22,12 +22,12 @@ Variable Battle AI is a neural network-powered bot designed to play the text-bas
 
 ## Usage
 
-for Run the script for start play the game with AI:
-from ```/models```
-move model file to
-```/test_model_place/cores```
-the star script ```/test_model_place/vbm.py```
-use ```python3 vbm.py```
+- for Run the script for start play the game with AI:
+- from ```/models```
+- move model file to
+- ```/test_model_place/cores```
+- then star script ```/test_model_place/vbm.py```
+- use ```python3 vbm.py```
 
 ```sh
 python main.py

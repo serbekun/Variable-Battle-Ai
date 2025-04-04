@@ -96,5 +96,3 @@ This project is licensed under the MIT License.
 
 ## Author
 Developed by [serbekun](https://github.com/serbekun).
-```
-

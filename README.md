@@ -8,6 +8,13 @@ Variable Battle AI is a neural network-powered bot designed to play the text-bas
 - Logs game data for training and improvement
 - Interactive gameplay where a player competes against the AI
 
+## use import
+- torch
+- json
+- os
+- random
+- sklearn.model_selection
+
 ## Installation
 
 1. Clone the repository:
@@ -49,7 +56,6 @@ The AI uses a fully connected neural network with the following parameters:
 - **Input size**: 9
 - **Hidden layers**: 5 layers of 126 neurons
 - **Output size**: 5 (representing possible actions)
-- **Trained using**: 70 epochs, 40,000 games per epoch
 
 ## Project Structure
 ```
@@ -60,6 +66,7 @@ Variable-Battle-Ai/
 │── models/               # AI models and training data
 │   │── vb_model1.pth     # Trained model weights firts vesrion
 |   |── vb_model2.pth     # Trained model weights second version
+|   |── vb_model3.pth     # Trained model weights thid version
 │
 |── test_model_place/     # AI test script folder
 |   |── cores/

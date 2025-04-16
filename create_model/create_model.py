@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 import os
 
 # function for gene rate bot action
-def get_bot_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
+def get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
         
     if bot_hp < 50:
         return 2
@@ -41,8 +41,8 @@ def generate_game(num_rounds=100):
     player_block, bot_block = False, False
 
     for round_count in range(num_rounds):
-        player_action = random.randint(1, 5)  # random action player
-        bot_action = get_bot_action(player_hp, bot_hp, round_count, bot_attack, bot_heal)
+        player_action = get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal)
+        bot_action = get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal)
 
         # processing actions
         if player_action == 1:
@@ -137,7 +137,7 @@ INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
 EPOCHS = 100
-GAMES_PER_EPOCH = 5000
+GAMES_PER_EPOCH = 100000
 BEST_MODEL_NAME = "vb_model3.pth"
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.001

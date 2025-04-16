@@ -30,11 +30,8 @@ Variable Battle AI is a neural network-powered bot designed to play the text-bas
 ## Usage
 
 - for Run the script for start play the game with AI:
-- from ```/models```
-- move model file to
- ```sh
- /test_model_place/cores
- ```
+- in start in file ```/test_model_place/vbm.py```
+have const with model name chnage this for change play model
 - then star script
  ```sh
   /test_model_place/vbm.py
@@ -60,6 +57,12 @@ The AI uses a fully connected neural network with the following parameters:
 ## Project Structure
 ```
 Variable-Battle-Ai/
+|
+|── logs                  # place for save all game logs
+|   |── vb_model1.json    #
+|   |── vb_model2.json    # test game with ai game logs
+|   |── vb_model3.json    # 
+|
 │── create_model          # folder where exist cod for lerning model
 │   │── create_model.py   # lerning model script with setting 
 │

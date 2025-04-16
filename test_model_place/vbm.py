@@ -57,7 +57,7 @@ class BattleNet(nn.Module):
 model = BattleNet(input_size=9, hidden_size=126, output_size=5)
 
 # Load saved model weights
-model.load_state_dict(torch.load('cores/vb_model2.pth'))
+model.load_state_dict(torch.load('cores/vb_model3.pth'))
 model.eval()  # Set the model to evaluation mode
 
 # Function to predict bot's action

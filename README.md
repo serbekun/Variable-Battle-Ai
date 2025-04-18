@@ -54,15 +54,22 @@ The AI uses a fully connected neural network with the following parameters:
 - **Hidden layers**: 5 layers of 126 neurons
 - **Output size**: 5 (representing possible actions)
 
+all exist AI models
+vb_model1.pth       # first model can easy loss all
+vb_model2.pth       # second model can so so play
+vb_model3.pth       # thre model can play best vb_model2.pth
+vb_model_data_1.pth # model create with date pack data_1.json
+
 ## Project Structure
 ```
 Variable-Battle-Ai/
 |
 |── logs                  # place for save all game logs
-|   |── vb_model1.json    #
+|   |── vb_model1.json    # 
 |   |── vb_model2.json    # test game with ai game logs
 |   |── vb_model3.json    # 
 |
+|── 
 │── create_model          # folder where exist cod for lerning model
 │   │── create_model.py   # lerning model script with setting 
 │

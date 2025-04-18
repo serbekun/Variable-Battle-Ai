@@ -65,25 +65,34 @@ vb_model_data_1.pth # model create with date pack data_1.json
 ```
 Variable-Battle-Ai/
 |
-|── logs                  # place for save all game logs
-|   |── vb_model1.json    # 
-|   |── vb_model2.json    # test game with ai game logs
-|   |── vb_model3.json    # 
+├── create_model          # Folder containing model learning code
+│   ├── create_model.py   # Learning model script with settings
+│   └── create_model_ujf.py # Additional script for creating models
 |
-|── data_packs            # folder with date for traning model
-│── create_model          # folder where exist cod for lerning model
-│   │── create_model.py   # lerning model script with setting 
-│
-│── models/               # AI models and training data
-│   │── vb_model1.pth     # Trained model weights firts vesrion
-|   |── vb_model2.pth     # Trained model weights second version
-|   |── vb_model3.pth     # Trained model weights thid version
-│
-|── test_model_place/     # AI test script folder
-|   |── cores/
-|   |        |── vba.py   # game logick with all action function
-|   |        |── vbc.py   # game core with function for show status and cat limits
-|   |── vbm.py            # main fail what need to start for play with model
+├── date_generator        # Generator for data used in training
+│   └── date_generator.py
+|
+├── data_packs            # Folder holding data for model training
+│   └── data_1.json
+|
+├── game_logs             # Folder for saving game logs
+│   ├── vb_model1.json    # Game log for version 1
+│   ├── vb_model2.json    # Test games with AI for version 2
+│   ├── vb_model3.json    # Game log for version 3
+│   └── vb_model_data_1.json # Additional game log data
+|
+├── models                # Folder for AI models and weights
+│   ├── vb_model1.pth     # Trained model weights: first version
+│   ├── vb_model2.pth     # Trained model weights: second version
+│   ├── vb_model3.pth     # Trained model weights: third version
+│   └── vb_model_data_1.pth
+|
+├── test_model_place      # Folder for AI testing scripts
+|   |
+|   ├── cores/
+|   │   ├── vba.py        # Game logic with action functions
+|   │   ├── vbc.py        # Core functionality for showing status and li
+|   └── vbm.py            # Main file to run the model
 |
 │── README.md             # Project documentation
 ```

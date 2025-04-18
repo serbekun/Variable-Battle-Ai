@@ -55,6 +55,7 @@ The AI uses a fully connected neural network with the following parameters:
 - **Output size**: 5 (representing possible actions)
 
 all exist AI models
+
 vb_model1.pth       # first model can easy loss all
 vb_model2.pth       # second model can so so play
 vb_model3.pth       # thre model can play best vb_model2.pth
@@ -69,7 +70,7 @@ Variable-Battle-Ai/
 |   |── vb_model2.json    # test game with ai game logs
 |   |── vb_model3.json    # 
 |
-|── 
+|── data_packs            # folder with date for traning model
 │── create_model          # folder where exist cod for lerning model
 │   │── create_model.py   # lerning model script with setting 
 │

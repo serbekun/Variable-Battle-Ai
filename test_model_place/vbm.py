@@ -6,13 +6,13 @@ import cores.vbc as vbc
 import cores.vba as vba
 import json
 
-MODELNAME = "vb_model_data_1"
-GAMELOGSAVE = "../game_logs/" + MODELNAME + ".json"
-MODELLOADPATH = "../models/" + MODELNAME + ".pth"
+MODELNAME = "vb_model_from_json"
+GAME_LOG_SAVE = "../game_logs/" + MODELNAME + ".json"
+MODEL_LOAD_PATH = "../models/" + MODELNAME + ".pth"
 
 def log_game_data(player_hp, player_attack, player_heal, player_block,
                   bot_hp, bot_attack, bot_heal, bot_block,
-                  round_count, player_action, bot_action, filename=GAMELOGSAVE):
+                  round_count, player_action, bot_action, filename=GAME_LOG_SAVE):
     # Create a log entry with game data
     log_entry = {
         "round_count": round_count,
@@ -58,7 +58,7 @@ class BattleNet(nn.Module):
 model = BattleNet(input_size=9, hidden_size=126, output_size=5)
 
 # Load saved model weights
-model.load_state_dict(torch.load(MODELLOADPATH))
+model.load_state_dict(torch.load(MODEL_LOAD_PATH))
 model.eval()  # Set the model to evaluation mode
 
 # Function to predict bot's action
@@ -157,6 +157,6 @@ while True:
     # Log game data
     log_game_data(player_hp, player_attack, player_heal, player_block,
                   bot_hp, bot_attack, bot_heal, bot_block,
-                  round_count, player_action, bot_action, filename=GAMELOGSAVE)
+                  round_count, player_action, bot_action, filename=GAME_LOG_SAVE)
     
     round_count += 1

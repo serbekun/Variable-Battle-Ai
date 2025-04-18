@@ -30,34 +30,32 @@ def generate_session(num_rounds):
         human_action = get_action(human_hp, vb_hp, round_count, human_attack, human_heal)
         vb_action = get_action(vb_hp, human_hp, round_count, vb_attack, vb_heal)
 
-        # Обработка действий human
-        if human_action == 1:  # атака
+        if human_action == 1:  
             if vb_block:
                 vb_block = False
             else:
                 vb_hp -= human_attack
-        elif human_action == 2:  # лечение
+        elif human_action == 2:
             human_hp += human_heal
-        elif human_action == 3:  # блок
+        elif human_action == 3:
             human_block = True
-        elif human_action == 4:  # увеличение атаки
+        elif human_action == 4:
             human_attack += 5
-        elif human_action == 5:  # увеличение лечения
+        elif human_action == 5:
             human_heal += 5
 
-        # Обработка действий vb_model1
-        if vb_action == 1:  # атака
+        if vb_action == 1:
             if human_block:
                 human_block = False
             else:
                 human_hp -= vb_attack
-        elif vb_action == 2:  # лечение
+        elif vb_action == 2:
             vb_hp += vb_heal
-        elif vb_action == 3:  # блок
+        elif vb_action == 3:
             vb_block = True
-        elif vb_action == 4:  # увеличение атаки
+        elif vb_action == 4:
             vb_attack += 5
-        elif vb_action == 5:  # увеличение лечения
+        elif vb_action == 5:
             vb_heal += 5
 
         session_data.append({
@@ -88,12 +86,12 @@ def save_to_json(data, file_name):
 def main():
     game_data = generate_data(NUM_SESSIONS, NUM_ROUNDS_PER_SESSION)
     save_to_json(game_data, FILE_PATH)
-    print(f"Данные успешно сохранены в файл '{FILE_PATH}'!")
+    print(f"date successful save to'{FILE_PATH}'!")
 
-NUM_SESSIONS = 1000  # Количество сессий
-NUM_ROUNDS_PER_SESSION = 100  # Количество раундов в одной сессии
-FILE_NAME = "data_1.json"  # Название файла
-FILE_PATH = "../date_packs/" +  FILE_NAME  # Путь к файлу
+NUM_SESSIONS = 10
+NUM_ROUNDS_PER_SESSION = 100
+FILE_NAME = "data_1.json"
+FILE_PATH = "../date_packs/" +  FILE_NAME
 
 if __name__ == "__main__":
     main()

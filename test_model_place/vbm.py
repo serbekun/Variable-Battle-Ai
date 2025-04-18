@@ -6,8 +6,8 @@ import cores.vbc as vbc
 import cores.vba as vba
 import json
 
-MODELNAME = "vb_model1"
-GAMELOGSAVE = "../logs/" + MODELNAME + ".json"
+MODELNAME = "vb_model_data_1"
+GAMELOGSAVE = "../game_logs/" + MODELNAME + ".json"
 MODELLOADPATH = "../models/" + MODELNAME + ".pth"
 
 def log_game_data(player_hp, player_attack, player_heal, player_block,

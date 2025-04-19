@@ -9,10 +9,10 @@ from sklearn.model_selection import train_test_split
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-EPOCHS = 10
+EPOCHS = 100
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.001
-MODEL_NAME = "vb_model_from_json.pth"
+MODEL_NAME = "vb_model_date_2.pth"
 MODEL_SAVE_PATH = "../models/" + MODEL_NAME
 JSON_PATH = "../date_packs/data_1.json"
 

@@ -6,7 +6,7 @@ import cores.vbc as vbc
 import cores.vba as vba
 import json
 
-MODELNAME = "vb_model_from_json"
+MODELNAME = "vb_model_example2"
 GAME_LOG_SAVE = "../game_logs/" + MODELNAME + ".json"
 MODEL_LOAD_PATH = "../models/" + MODELNAME + ".pth"
 

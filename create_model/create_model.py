@@ -87,9 +87,9 @@ def load_or_create_model(input_size, hidden_size, output_size, model_name):
     return model
 
 def print_status(epoch, total_epochs, loss, val_loss, best_loss, gen, total_gen):
-    sys.stdout.write("\033[F" * 3)  # поднимаемся на 3 строки вверх
+    sys.stdout.write("\033[F" * 3)
     sys.stdout.write(f"Epoch {epoch}/{total_epochs}\n")
-    sys.stdout.write(f"Loss: {loss:.4f} | Val: {val_loss:.4f} | Best: {best_loss:.4f}\n")
+    sys.stdout.write(f"Loss: {loss:.4f} | Best: {best_loss:.4f}\n")
     sys.stdout.write(f"Generating {gen}/{total_gen}\n")
     sys.stdout.flush()
 
@@ -129,7 +129,7 @@ def yield_batch(model, X, y):
 
 def train_model(model):
     global best_loss
-    print("\n\n\n")  # пространство для 3-х обновляемых строк
+    print("\n\n\n")
     for epoch in range(EPOCHS):
         X_batches, y_batches = [], []
 
@@ -148,22 +148,19 @@ def train_model(model):
             avg_loss, val_loss = yield_batch(model, X_batches, y_batches)
             print_status(epoch + 1, EPOCHS, avg_loss, val_loss, best_loss, GAMES_PER_EPOCH, GAMES_PER_EPOCH)
 
-# Параметры обучения
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-EPOCHS = 5
-GAMES_PER_EPOCH = 100
+EPOCHS = 500
+GAMES_PER_EPOCH = 10000
 BATCH_SIZE = 1024
-LEARNING_RATE = 0.001
-MODEL_NAME = "vb_model_example.pth"
+LEARNING_RATE = 0.01
+MODEL_NAME = "vb_model_example2.pth"
 MODELSAVEPATH = "../models/" + MODEL_NAME
 
-# Инициализация
 model = load_or_create_model(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE, MODEL_NAME)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 best_loss = float('inf')
 
-# Запуск обучения
 train_model(model)

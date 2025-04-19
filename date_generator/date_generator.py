@@ -1,5 +1,6 @@
 import random
 import json
+from tqdm import tqdm
 
 def get_action(hp, opponent_hp, round_count, attack, heal):
     if hp < 50:
@@ -74,7 +75,7 @@ def generate_session(num_rounds):
 
 def generate_data(num_sessions, num_rounds_per_session):
     all_sessions = []
-    for session in range(num_sessions):
+    for session in tqdm(range(num_sessions), desc="Генерация сессий"):
         session_data = generate_session(num_rounds_per_session)
         all_sessions.append(session_data)
     return all_sessions
@@ -88,9 +89,9 @@ def main():
     save_to_json(game_data, FILE_PATH)
     print(f"date successful save to'{FILE_PATH}'!")
 
-NUM_SESSIONS = 10
+NUM_SESSIONS = 10000
 NUM_ROUNDS_PER_SESSION = 100
-FILE_NAME = "data_1.json"
+FILE_NAME = "data_2.json"
 FILE_PATH = "../date_packs/" +  FILE_NAME
 
 if __name__ == "__main__":

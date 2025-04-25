@@ -91,7 +91,7 @@ def main():
 
 NUM_SESSIONS = 10000
 NUM_ROUNDS_PER_SESSION = 1000
-FILE_NAME = "data_3.json"
+FILE_NAME = "data_example.json"
 FILE_PATH = "../date_packs/" +  FILE_NAME
 
 if __name__ == "__main__":

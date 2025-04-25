@@ -64,37 +64,63 @@ vb_model_data_1.pth # model create with date pack data_1.json
 ## Project Structure
 ```
 Variable-Battle-Ai/
-|
-├── create_model          # Folder containing model learning code
-│   ├── create_model.py   # Learning model script with settings
-│   └── create_model_ujf.py # Additional script for creating models
-|
-├── date_generator        # Generator for data used in training
-│   └── date_generator.py
-|
-├── data_packs            # Folder holding data for model training
-│   └── data_1.json
-|
-├── game_logs             # Folder for saving game logs
-│   ├── vb_model1.json    # Game log for version 1
-│   ├── vb_model2.json    # Test games with AI for version 2
-│   ├── vb_model3.json    # Game log for version 3
-│   └── vb_model_data_1.json # Additional game log data
-|
-├── models                # Folder for AI models and weights
-│   ├── vb_model1.pth     # Trained model weights: first version
-│   ├── vb_model2.pth     # Trained model weights: second version
-│   ├── vb_model3.pth     # Trained model weights: third version
-│   └── vb_model_data_1.pth
-|
-├── test_model_place      # Folder for AI testing scripts
-|   |
-|   ├── cores/
-|   │   ├── vba.py        # Game logic with action functions
-|   │   ├── vbc.py        # Core functionality for showing status and li
-|   └── vbm.py            # Main file to run the model
-|
-│── README.md             # Project documentation
+│
+├── README.md                        # Project documentation
+│
+├── create_model/                   # Folder containing model training scripts
+│   ├── create_model.py             # Main script for training models with settings
+│   └── create_model_ujf.py         # Additional script for creating and training models
+│
+├── date_generator/                 # Generator for synthetic data used in training
+│   └── date_generator.py           # Script to generate game data dynamically
+│
+├── date_packs/                     # Folder containing JSON data packs for training
+│   └── data_1.json                 # Training data pack (version 1)
+│
+├── game_logs/                      # Folder containing logs of games played
+│   ├── vb_model1.json              # Game log from model version 1
+│   ├── vb_model2.json              # Test games played with model version 2
+│   ├── vb_model3.json              # Game log from model version 3
+│   ├── vb_model_data_1.json        # Additional data collected from games
+│   ├── vb_model_example2.json      # Example model log (version 2)
+│   └── vb_model_from_json.json     # Log generated from JSON-trained model
+│
+├── models/                         # Folder for storing trained model weights (.pth)
+│   ├── vb_model1.pth               # Trained weights for model version 1
+│   ├── vb_model2.pth               # Trained weights for model version 2
+│   ├── vb_model3.pth               # Trained weights for model version 3
+│   ├── vb_model_data_1.pth         # Model trained on data_1.json
+│   ├── vb_model_date_2.pth         # Model trained on date pack version 2
+│   ├── vb_model_example2.pth       # Example trained model version 2
+│   ├── vb_model_example3.pth       # Example trained model version 3
+│   ├── vb_model_example.pth        # General example model
+│   └── vb_model_from_json.pth      # Model trained on data from JSON
+│
+├── models_loss_log/                # Training loss logs for each model
+│   ├── vb_model1.json              # Loss log for model version 1
+│   ├── vb_model2.json              # Loss log for model version 2
+│   ├── vb_model3.json              # Loss log for model version 3
+│   ├── vb_model_data_1.json        # Loss log for data_1 model
+│   ├── vb_model_date_2.json        # Loss log for date_2 model
+│   ├── vb_model_example2.json      # Loss log for example model 2
+│   ├── vb_model_example3.json      # Loss log for example model 3
+│   ├── vb_model_example.json       # Loss log for general example model
+│   └── vb_model_from_json.json     # Loss log for JSON-trained model
+│
+├── test_model_loss/                # Testing script to evaluate model performance by loss
+│   └── test_model_loss.py          # Script to compute and compare model losses
+│
+└── test_model_place/               # Folder for testing models in the game environment
+    ├── cores/                      # Core game logic and utility functions
+    │   ├── __pycache__/            # Cached bytecode for Python modules
+    │   │   ├── vba.cpython-312.pyc
+    │   │   ├── vba.cpython-38.pyc
+    │   │   ├── vbc.cpython-312.pyc
+    │   │   └── vbc.cpython-38.pyc
+    │   ├── vba.py                  # Game logic and action definitions
+    │   └── vbc.py                  # Core functionality (e.g. status display)
+    └── vbm.py                      # Main script to run and test AI models in-game
+
 ```
 
 ## Function Overview

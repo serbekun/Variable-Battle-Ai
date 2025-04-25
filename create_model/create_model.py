@@ -151,11 +151,11 @@ def train_model(model):
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-EPOCHS = 500
-GAMES_PER_EPOCH = 10000
+EPOCHS = 500000
+GAMES_PER_EPOCH = 100
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.01
-MODEL_NAME = "vb_model_example2.pth"
+MODEL_NAME = "vb_model_example.pth"
 MODELSAVEPATH = "../models/" + MODEL_NAME
 
 model = load_or_create_model(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE, MODEL_NAME)

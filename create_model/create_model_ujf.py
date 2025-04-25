@@ -12,9 +12,9 @@ OUTPUT_SIZE = 5
 EPOCHS = 100
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.001
-MODEL_NAME = "vb_model_date_2.pth"
+MODEL_NAME = "vb_model_example.pth"
 MODEL_SAVE_PATH = "../models/" + MODEL_NAME
-JSON_PATH = "../date_packs/data_1.json"
+JSON_PATH = "../date_packs/data_example.json"
 
 # ==== Модель ====
 class BattleNet(nn.Module):

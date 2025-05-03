@@ -6,17 +6,19 @@ import os
 import sys
 from sklearn.model_selection import train_test_split
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
+
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
 EPOCHS = 100
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.001
-MODEL_NAME = "vb_model_example.pth"
+MODEL_NAME = "vb_model_hihi.pth"
 MODEL_SAVE_PATH = "../models/" + MODEL_NAME
 JSON_PATH = "../date_packs/data_example.json"
 
-# ==== Модель ====
 class BattleNet(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super().__init__()
@@ -32,14 +34,14 @@ class BattleNet(nn.Module):
 
     def forward(self, x):
         return self.model(x)
-
+        
 def load_or_create_model():
-    model = BattleNet(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE)
+    model = BattleNet(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE).to(device)
     if os.path.exists(MODEL_SAVE_PATH):
-        model.load_state_dict(torch.load(MODEL_SAVE_PATH))
-        print("model loaded from fail.")
+        model.load_state_dict(torch.load(MODEL_SAVE_PATH, map_location=device))
+        print("Model loaded from file.")
     else:
-        print("create new model")
+        print("Created new model.")
     return model
 
 def load_data_from_json(file_path):
@@ -74,8 +76,8 @@ def print_status(epoch, total_epochs, loss, val_loss, best_loss):
 def train_model(model, X, y):
     global best_loss
 
-    X_tensor = torch.tensor(X, dtype=torch.float32)
-    y_tensor = torch.tensor(y, dtype=torch.long)
+    X_tensor = torch.tensor(X, dtype=torch.float32).to(device)
+    y_tensor = torch.tensor(y, dtype=torch.long).to(device)
 
     for epoch in range(1, EPOCHS + 1):
         model.train()
@@ -107,7 +109,7 @@ def train_model(model, X, y):
         print_status(epoch, EPOCHS, avg_loss, val_loss.item(), best_loss)
 
 if __name__ == "__main__":
-    print("load date from file", JSON_PATH)
+    print("Loading data from file:", JSON_PATH)
     X_data, y_data = load_data_from_json(JSON_PATH)
 
     model = load_or_create_model()

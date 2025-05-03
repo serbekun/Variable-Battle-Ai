@@ -7,6 +7,8 @@ import os
 import sys
 from sklearn.model_selection import train_test_split
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 def get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
     if bot_hp < 50:
         return 2
@@ -81,9 +83,9 @@ class BattleNet(nn.Module):
         return self.model(x)
 
 def load_or_create_model(input_size, hidden_size, output_size, model_name):
-    model = BattleNet(input_size, hidden_size, output_size)
+    model = BattleNet(input_size, hidden_size, output_size).to(device)
     if os.path.exists(model_name):
-        model.load_state_dict(torch.load(model_name))
+        model.load_state_dict(torch.load(model_name, map_location=device))
     return model
 
 def print_status(epoch, total_epochs, loss, val_loss, best_loss, gen, total_gen):
@@ -97,8 +99,8 @@ def yield_batch(model, X, y):
     global best_loss
     model.train()
 
-    X_tensor = torch.tensor(X, dtype=torch.float32)
-    y_tensor = torch.tensor(y, dtype=torch.long)
+    X_tensor = torch.tensor(X, dtype=torch.float32, device=device)
+    y_tensor = torch.tensor(y, dtype=torch.long, device=device)
 
     X_train, X_val, y_train, y_val = train_test_split(X_tensor, y_tensor, test_size=0.1)
 
@@ -151,11 +153,11 @@ def train_model(model):
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-EPOCHS = 500000
-GAMES_PER_EPOCH = 100
+EPOCHS = 500
+GAMES_PER_EPOCH = 1000
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.01
-MODEL_NAME = "vb_model_example.pth"
+MODEL_NAME = "vb_model_hihi.pth"
 MODELSAVEPATH = "../models/" + MODEL_NAME
 
 model = load_or_create_model(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE, MODEL_NAME)

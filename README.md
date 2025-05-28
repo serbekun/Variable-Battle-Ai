@@ -1,4 +1,4 @@
-# Variable Battle AI
+# Variable Battle AI with CUDA
 
 Variable Battle AI is a neural network-powered bot designed to play the text-based game Variable Battle. It utilizes PyTorch for deep learning and logs gameplay data for further training and analysis.
 

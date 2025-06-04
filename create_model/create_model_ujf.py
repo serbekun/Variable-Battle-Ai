@@ -12,11 +12,12 @@ OUTPUT_SIZE = 5
 EPOCHS = 100
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.001
-MODEL_NAME = "vb_model_example.pth"
+MODEL_NAME = "vb_model_learn_wpa1.pth"
+MODEL_NAME_IN_JSON = "model"
 MODEL_SAVE_PATH = "../models/" + MODEL_NAME
-JSON_PATH = "../date_packs/data_example.json"
+JSON_PATH = "../date_packs/data_1_from_player.json"
 
-# ==== Модель ====
+# model
 class BattleNet(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super().__init__()
@@ -42,26 +43,27 @@ def load_or_create_model():
         print("create new model")
     return model
 
+
 def load_data_from_json(file_path):
     with open(file_path, 'r') as f:
-        sessions = json.load(f)
-
+        rounds = json.load(f)  
     X, y = [], []
-    for session in sessions:
-        for round_data in session:
-            human = round_data["human"]
-            bot = round_data["vb_model1"]
+    for round_data in rounds:
+        human = round_data["human"]
+        bot = round_data[MODEL_NAME_IN_JSON]
+        input_vector = [
+            round_data["round_count"],
+            human["hp"], human["attack"], human["heal"], int(human["block"]),
+            bot["hp"], bot["attack"], bot["heal"], int(bot["block"])
+        ]
+        action = bot["action"]
+        if action <= 0:
+            print("action error:", action)
+            continue
 
-            input_vector = [
-                round_data["round_count"],
-                human["hp"], human["attack"], human["heal"], int(human["block"]),
-                bot["hp"], bot["attack"], bot["heal"], int(bot["block"])
-            ]
-            action = bot["action"] - 1
 
-            X.append(input_vector)
-            y.append(action)
-
+        X.append(input_vector)
+        y.append(action)
     return X, y
 
 def print_status(epoch, total_epochs, loss, val_loss, best_loss):

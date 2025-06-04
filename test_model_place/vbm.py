@@ -2,11 +2,13 @@ import torch
 import torch.nn as nn
 import numpy as np
 import joblib
-import cores.vbc as vbc
-import cores.vba as vba
+import include.vbc as vbc
+import include.vba as vba
 import json
+import sys
+import os
 
-MODELNAME = "vb_model_example3"
+MODELNAME = "vb_model_learn_wpa1"
 GAME_LOG_SAVE = "../game_logs/" + MODELNAME + ".json"
 MODEL_LOAD_PATH = "../models/" + MODELNAME + ".pth"
 

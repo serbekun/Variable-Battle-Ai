@@ -1,0 +1,376 @@
+[
+    {
+        "round_count": 40,
+        "human": {
+            "hp": 73,
+            "attack": 78,
+            "heal": 36,
+            "block": true,
+            "action": 1
+        },
+        "model": {
+            "hp": 55,
+            "attack": 15,
+            "heal": 88,
+            "block": true,
+            "action": 0
+        }
+    },
+    {
+        "round_count": 18,
+        "human": {
+            "hp": 13,
+            "attack": 97,
+            "heal": 30,
+            "block": false,
+            "action": 2
+        },
+        "model": {
+            "hp": 99,
+            "attack": 88,
+            "heal": 12,
+            "block": true,
+            "action": 1
+        }
+    },
+    {
+        "round_count": 84,
+        "human": {
+            "hp": 97,
+            "attack": 4,
+            "heal": 14,
+            "block": true,
+            "action": 4
+        },
+        "model": {
+            "hp": 114,
+            "attack": 49,
+            "heal": 75,
+            "block": true,
+            "action": 2
+        }
+    },
+    {
+        "round_count": 93,
+        "human": {
+            "hp": 110,
+            "attack": 39,
+            "heal": 98,
+            "block": true,
+            "action": 4
+        },
+        "model": {
+            "hp": 95,
+            "attack": 16,
+            "heal": 13,
+            "block": false,
+            "action": 0
+        }
+    },
+    {
+        "round_count": 56,
+        "human": {
+            "hp": 60,
+            "attack": 8,
+            "heal": 32,
+            "block": false,
+            "action": 4
+        },
+        "model": {
+            "hp": 21,
+            "attack": 47,
+            "heal": 49,
+            "block": false,
+            "action": 3
+        }
+    },
+    {
+        "round_count": 94,
+        "human": {
+            "hp": 134,
+            "attack": 53,
+            "heal": 27,
+            "block": false,
+            "action": 1
+        },
+        "model": {
+            "hp": 44,
+            "attack": 27,
+            "heal": 74,
+            "block": false,
+            "action": 0
+        }
+    },
+    {
+        "round_count": 45,
+        "human": {
+            "hp": 121,
+            "attack": 59,
+            "heal": 86,
+            "block": false,
+            "action": 1
+        },
+        "model": {
+            "hp": 131,
+            "attack": 5,
+            "heal": 20,
+            "block": true,
+            "action": 0
+        }
+    },
+    {
+        "round_count": 64,
+        "human": {
+            "hp": 94,
+            "attack": 5,
+            "heal": 54,
+            "block": false,
+            "action": 4
+        },
+        "model": {
+            "hp": 79,
+            "attack": 63,
+            "heal": 3,
+            "block": false,
+            "action": 3
+        }
+    },
+    {
+        "round_count": 10,
+        "human": {
+            "hp": 114,
+            "attack": 80,
+            "heal": 24,
+            "block": true,
+            "action": 1
+        },
+        "model": {
+            "hp": 139,
+            "attack": 97,
+            "heal": 38,
+            "block": false,
+            "action": 2
+        }
+    },
+    {
+        "round_count": 48,
+        "human": {
+            "hp": 144,
+            "attack": 29,
+            "heal": 73,
+            "block": false,
+            "action": 4
+        },
+        "model": {
+            "hp": 138,
+            "attack": 51,
+            "heal": 58,
+            "block": true,
+            "action": 1
+        }
+    },
+    {
+        "round_count": 13,
+        "human": {
+            "hp": 35,
+            "attack": 2,
+            "heal": 68,
+            "block": false,
+            "action": 2
+        },
+        "model": {
+            "hp": 141,
+            "attack": 46,
+            "heal": 21,
+            "block": false,
+            "action": 2
+        }
+    },
+    {
+        "round_count": 49,
+        "human": {
+            "hp": 96,
+            "attack": 67,
+            "heal": 18,
+            "block": true,
+            "action": 1
+        },
+        "model": {
+            "hp": 38,
+            "attack": 62,
+            "heal": 26,
+            "block": false,
+            "action": 0
+        }
+    },
+    {
+        "round_count": 50,
+        "human": {
+            "hp": 45,
+            "attack": 46,
+            "heal": 64,
+            "block": true,
+            "action": 1
+        },
+        "model": {
+            "hp": 5,
+            "attack": 85,
+            "heal": 35,
+            "block": true,
+            "action": 1
+        }
+    },
+    {
+        "round_count": 42,
+        "human": {
+            "hp": 19,
+            "attack": 27,
+            "heal": 86,
+            "block": false,
+            "action": 1
+        },
+        "model": {
+            "hp": 11,
+            "attack": 62,
+            "heal": 78,
+            "block": true,
+            "action": 2
+        }
+    },
+    {
+        "round_count": 74,
+        "human": {
+            "hp": 47,
+            "attack": 85,
+            "heal": 33,
+            "block": false,
+            "action": 1
+        },
+        "model": {
+            "hp": 53,
+            "attack": 89,
+            "heal": 50,
+            "block": true,
+            "action": 3
+        }
+    },
+    {
+        "round_count": 86,
+        "human": {
+            "hp": 17,
+            "attack": 5,
+            "heal": 89,
+            "block": true,
+            "action": 2
+        },
+        "model": {
+            "hp": 51,
+            "attack": 38,
+            "heal": 69,
+            "block": false,
+            "action": 0
+        }
+    },
+    {
+        "round_count": 94,
+        "human": {
+            "hp": 89,
+            "attack": 20,
+            "heal": 74,
+            "block": false,
+            "action": 2
+        },
+        "model": {
+            "hp": 141,
+            "attack": 13,
+            "heal": 44,
+            "block": true,
+            "action": 2
+        }
+    },
+    {
+        "round_count": 21,
+        "human": {
+            "hp": 12,
+            "attack": 95,
+            "heal": 53,
+            "block": false,
+            "action": 1
+        },
+        "model": {
+            "hp": 10,
+            "attack": 27,
+            "heal": 51,
+            "block": false,
+            "action": 4
+        }
+    },
+    {
+        "round_count": 73,
+        "human": {
+            "hp": 50,
+            "attack": 48,
+            "heal": 46,
+            "block": false,
+            "action": 1
+        },
+        "model": {
+            "hp": 27,
+            "attack": 18,
+            "heal": 44,
+            "block": false,
+            "action": 2
+        }
+    },
+    {
+        "round_count": 43,
+        "human": {
+            "hp": 130,
+            "attack": 43,
+            "heal": 4,
+            "block": false,
+            "action": 5
+        },
+        "model": {
+            "hp": 78,
+            "attack": 76,
+            "heal": 97,
+            "block": false,
+            "action": 4
+        }
+    },
+    {
+        "round_count": 77,
+        "human": {
+            "hp": 84,
+            "attack": 6,
+            "heal": 67,
+            "block": false,
+            "action": 4
+        },
+        "model": {
+            "hp": 68,
+            "attack": 45,
+            "heal": 44,
+            "block": true,
+            "action": 4
+        }
+    },
+    {
+        "round_count": 76,
+        "human": {
+            "hp": 37,
+            "attack": 57,
+            "heal": 33,
+            "block": true,
+            "action": 1
+        },
+        "model": {
+            "hp": 3,
+            "attack": 86,
+            "heal": 56,
+            "block": true,
+            "action": 3
+        }
+    }
+]

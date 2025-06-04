@@ -8,11 +8,11 @@ from tqdm import tqdm
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-MODEL_NAME = "vb_model_example"
+MODEL_NAME = "vb_model_kenta1"
 MODEL_PATH = "../models/" + MODEL_NAME + ".pth"
 LOSSLOGSAVEPATH = "../models_loss_log/" + MODEL_NAME + ".json"
 
-NUM_GAMES = 100000
+NUM_GAMES = 10000
 
 def get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
     if bot_hp < 50:

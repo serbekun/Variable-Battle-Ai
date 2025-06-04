@@ -10,18 +10,22 @@ from sklearn.model_selection import train_test_split
 def get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
     if bot_hp < 50:
         return 2
-    elif player_hp < 40 or round_count > 60:
+    elif player_hp < 40:
+        return 1
+    elif round_count > 60:
         return 1
     elif round_count < 100:
-        choice = random.randint(1, 2)
-        if choice == 1 and bot_attack < 50:
+        inc_heal_or_attack = random.randint(1, 2)
+        if inc_heal_or_attack == 1 and bot_attack < 50:
             return 4
-        elif choice == 2 and bot_heal < 50:
+        elif inc_heal_or_attack == 2 and bot_hp < 50:
             return 5
-        return choice
-    return random.randint(1, 5)
+        else:
+            return inc_heal_or_attack
+    else:
+        return random.randint(1, 5)
 
-def generate_game(num_rounds=100):
+def generate_game(num_rounds):
     game_data = []
     player_hp, bot_hp = 100, 100
     player_attack, player_heal = 5, 5
@@ -155,7 +159,7 @@ EPOCHS = 500000
 GAMES_PER_EPOCH = 100
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.01
-MODEL_NAME = "vb_model_example.pth"
+MODEL_NAME = "vb_model_kenta1.pth"
 MODELSAVEPATH = "../models/" + MODEL_NAME
 
 model = load_or_create_model(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE, MODEL_NAME)

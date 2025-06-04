@@ -1,11 +1,12 @@
+import os
+import sys
+import random
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import numpy as np
-import random
-import os
-import sys
 from sklearn.model_selection import train_test_split
+
 
 def get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
     if bot_hp < 50:
@@ -25,7 +26,7 @@ def get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
     else:
         return random.randint(1, 5)
 
-def generate_game(num_rounds):
+def generate_game(num_rounds=100):
     game_data = []
     player_hp, bot_hp = 100, 100
     player_attack, player_heal = 5, 5
@@ -66,7 +67,9 @@ def generate_game(num_rounds):
             bot_hp, bot_attack, bot_heal, int(bot_block),
             bot_action - 1
         ])
+
     return game_data
+
 
 class BattleNet(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -78,17 +81,19 @@ class BattleNet(nn.Module):
             nn.ReLU(),
             nn.Linear(hidden_size, hidden_size),
             nn.ReLU(),
-            nn.Linear(hidden_size, output_size)
+            nn.Linear(hidden_size, output_size),
         )
 
     def forward(self, x):
         return self.model(x)
+
 
 def load_or_create_model(input_size, hidden_size, output_size, model_name):
     model = BattleNet(input_size, hidden_size, output_size)
     if os.path.exists(model_name):
         model.load_state_dict(torch.load(model_name))
     return model
+
 
 def print_status(epoch, total_epochs, loss, val_loss, best_loss, gen, total_gen):
     sys.stdout.write("\033[F" * 3)
@@ -97,10 +102,11 @@ def print_status(epoch, total_epochs, loss, val_loss, best_loss, gen, total_gen)
     sys.stdout.write(f"Generating {gen}/{total_gen}\n")
     sys.stdout.flush()
 
+
 def yield_batch(model, X, y):
     global best_loss
-    model.train()
 
+    model.train()
     X_tensor = torch.tensor(X, dtype=torch.float32)
     y_tensor = torch.tensor(y, dtype=torch.long)
 
@@ -108,8 +114,8 @@ def yield_batch(model, X, y):
 
     total_loss = 0.0
     for i in range(0, len(X_train), BATCH_SIZE):
-        xb = X_train[i:i+BATCH_SIZE]
-        yb = y_train[i:i+BATCH_SIZE]
+        xb = X_train[i:i + BATCH_SIZE]
+        yb = y_train[i:i + BATCH_SIZE]
 
         optimizer.zero_grad()
         outputs = model(xb)
@@ -131,8 +137,10 @@ def yield_batch(model, X, y):
 
     return avg_loss, val_loss.item()
 
+
 def train_model(model):
     global best_loss
+
     print("\n\n\n")
     for epoch in range(EPOCHS):
         X_batches, y_batches = [], []
@@ -152,10 +160,11 @@ def train_model(model):
             avg_loss, val_loss = yield_batch(model, X_batches, y_batches)
             print_status(epoch + 1, EPOCHS, avg_loss, val_loss, best_loss, GAMES_PER_EPOCH, GAMES_PER_EPOCH)
 
+
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-EPOCHS = 500000
+EPOCHS = 500_000
 GAMES_PER_EPOCH = 100
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.01

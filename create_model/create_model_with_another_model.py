@@ -2,15 +2,18 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
-import joblib
-import include.vbc as vbc
-import include.vba as vba
 import json
 import os
 
-MODELNAME = "vb_model3_con_learn_wpa"
-GAME_LOG_SAVE = f"../logs/play_logs/with_player/{MODELNAME}.json"
-MODEL_LOAD_PATH = f"../models/{MODELNAME}.pth"
+import include.vbc as vbc 
+import include.vba as vba  
+
+PLAYER_MODELNAME = "vb_model_learn_infin"
+BOT_MODELNAME = "vb_model_learn_infin"
+GAME_LOG_SAVE = f"../logs/play_log/model_self_log/{PLAYER_MODELNAME}_{BOT_MODELNAME}.json"
+PLAYER_MODEL_LOAD_PATH = f"../models/{PLAYER_MODELNAME}.pth"
+BOT_MODEL_LOAD_PATH = f"../models/{BOT_MODELNAME}.pth"
+
 LEARN_RATE = 0.1
 
 class BattleNet(nn.Module):
@@ -32,17 +35,16 @@ class BattleNet(nn.Module):
 def log_game_data(player_hp, player_attack, player_heal, player_block,
                   bot_hp, bot_attack, bot_heal, bot_block,
                   round_count, player_action, bot_action, filename=GAME_LOG_SAVE):
-    # Create a log entry with game data
     log_entry = {
         "round_count": round_count,
-        "human": {
+        PLAYER_MODELNAME: {
             "hp": player_hp,
             "attack": player_attack,
             "heal": player_heal,
             "block": player_block,
             "action": player_action
         },
-        MODELNAME: {
+        BOT_MODELNAME: {
             "hp": bot_hp,
             "attack": bot_attack,
             "heal": bot_heal,
@@ -51,12 +53,12 @@ def log_game_data(player_hp, player_attack, player_heal, player_block,
         }
     }
     
-    # Append the log entry to the file
     with open(filename, "a") as log_file:
         json.dump(log_entry, log_file)
-        log_file.write("\n")  # Add a newline for each new log entry
+        log_file.write("\n")
 
 def train_model_on_single_step(model, optimizer, criterion, state, action):
+
     features = np.array([
         state["round_count"],
         state["player"]["hp"], state["player"]["attack"], state["player"]["heal"], int(state["player"]["block"]),
@@ -70,8 +72,10 @@ def train_model_on_single_step(model, optimizer, criterion, state, action):
     loss = criterion(output, target)
     loss.backward()
     optimizer.step()
+    return loss.item()
 
 def predict_action(model, state):
+
     features = np.array([
         state["round_count"],
         state["player"]["hp"], state["player"]["attack"], state["player"]["heal"], int(state["player"]["block"]),
@@ -83,59 +87,70 @@ def predict_action(model, state):
         _, predicted_action = torch.max(output, 1)
     return predicted_action.item()
 
-model = BattleNet(input_size=9, hidden_size=126, output_size=5)
+player_model = BattleNet(input_size=9, hidden_size=126, output_size=5)
+bot_model = BattleNet(input_size=9, hidden_size=126, output_size=5)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=LEARN_RATE)
+optimizer_player = optim.Adam(player_model.parameters(), lr=LEARN_RATE)
+optimizer_bot = optim.Adam(bot_model.parameters(), lr=LEARN_RATE)
 
-if os.path.exists(MODEL_LOAD_PATH):
-    model.load_state_dict(torch.load(MODEL_LOAD_PATH))
-    model.eval()
-    print("Model loaded.")
+if os.path.exists(PLAYER_MODEL_LOAD_PATH):
+    player_model.load_state_dict(torch.load(PLAYER_MODEL_LOAD_PATH))
+    player_model.eval()
+    print("Player model loaded.")
 else:
-    print("Model not found. Will train from scratch.")
+    print("Player model not found. Will train from scratch.")
+
+if os.path.exists(BOT_MODEL_LOAD_PATH):
+    bot_model.load_state_dict(torch.load(BOT_MODEL_LOAD_PATH))
+    bot_model.eval()
+    print("Bot model loaded.")
+else:
+    print("Bot model not found. Will train from scratch.")
 
 round_count = 0
 player_hp, player_attack, player_heal, player_block = 100, 5, 5, False
 bot_hp, bot_attack, bot_heal, bot_block = 100, 5, 5, False
 
-count = 0
+best_loss_player = float('inf')
+best_loss_bot = float('inf')
 
-while count < 100:
+game_count = 0
+NUM_GAMES = 1000
+
+while game_count < NUM_GAMES:
+
+    if game_count % 50 == 0:
+        print("epoch -", game_count)
+
     round_count = 0
     player_hp, player_attack, player_heal, player_block = 100, 5, 5, False
     bot_hp, bot_attack, bot_heal, bot_block = 100, 5, 5, False
-    count += 1
+    game_count += 1
+
     while round_count < 100:
         if not vbc.check_end_round(round_count, player_hp, bot_hp):
-            torch.save(model.state_dict(), MODEL_LOAD_PATH)
-            print("Game ended. Model saved.")
             break
-
-        vbc.show_display(player_hp, player_attack, player_heal, player_block,
-                        bot_hp, bot_attack, bot_heal, bot_block, round_count)
-
-        player_action = input(":")
-        if player_action in ("1", "a"):
-            bot_hp, bot_block = vba.player_attack_def(player_attack, bot_hp, bot_block)
-        elif player_action in ("2", "h"):
-            player_hp = vba.player_heal_def(player_heal, player_hp)
-        elif player_action in ("3", "b"):
-            player_block = vba.player_block_def(player_block)
-        elif player_action in ("4", "ia"):
-            player_attack = vba.player_increase_attack_def(player_attack)
-        elif player_action in ("5", "ih"):
-            player_heal = vba.player_increase_heal_def(player_heal)
-        else:
-            print("Turn skipped!")
 
         state = {
             "round_count": round_count,
-            "player": {"hp": player_hp, "attack": player_attack, "heal": player_heal, "block": player_block, "action": player_action},
+            "player": {"hp": player_hp, "attack": player_attack, "heal": player_heal, "block": player_block, "action": None},
             "bot": {"hp": bot_hp, "attack": bot_attack, "heal": bot_heal, "block": bot_block}
         }
-        bot_action = predict_action(model, state)
 
+        player_action = predict_action(player_model, state)
+        state["player"]["action"] = player_action
+        if player_action == 0:
+            bot_hp, bot_block = vba.player_attack_def(player_attack, bot_hp, bot_block)
+        elif player_action == 1:
+            player_hp = vba.player_heal_def(player_heal, player_hp)
+        elif player_action == 2:
+            player_block = vba.player_block_def(player_block)
+        elif player_action == 3:
+            player_attack = vba.player_increase_attack_def(player_attack)
+        elif player_action == 4:
+            player_heal = vba.player_increase_heal_def(player_heal)
 
+        bot_action = predict_action(bot_model, state)
         if bot_action == 0:
             player_hp, player_block = vba.bot_attack_def(bot_attack, player_hp, player_block)
         elif bot_action == 1:
@@ -147,15 +162,24 @@ while count < 100:
         elif bot_action == 4:
             bot_heal = vba.bot_increase_heal_def(bot_heal)
 
+        log_game_data(player_hp, player_attack, player_heal, player_block,
+                      bot_hp, bot_attack, bot_heal, bot_block,
+                      round_count, player_action, bot_action, filename=GAME_LOG_SAVE)
+
+        current_loss_player = train_model_on_single_step(player_model, optimizer_player, criterion, state, player_action)
+        current_loss_bot = train_model_on_single_step(bot_model, optimizer_bot, criterion, state, bot_action)
+
+        if current_loss_player < best_loss_player:
+            best_loss_player = current_loss_player
+            torch.save(player_model.state_dict(), PLAYER_MODEL_LOAD_PATH)
+            print(f"New best {PLAYER_MODELNAME} loss: {best_loss_player:.4f} - model saved.")
+
+        if current_loss_bot < best_loss_bot:
+            best_loss_bot = current_loss_bot
+            torch.save(bot_model.state_dict(), BOT_MODEL_LOAD_PATH)
+            print(f"New best {BOT_MODELNAME} loss: {best_loss_bot:.4f} - model saved.")
+
         player_hp, player_attack, player_heal, bot_hp, bot_attack, bot_heal = \
             vbc.cat_limits(player_hp, player_attack, player_heal, bot_hp, bot_attack, bot_heal)
-
-        log_game_data(player_hp, player_attack, player_heal, player_block,
-                    bot_hp, bot_attack, bot_heal, bot_block,
-                    round_count, player_action, bot_action, filename=GAME_LOG_SAVE)
-
-        # train
-        print("train_model")
-        train_model_on_single_step(model, optimizer, criterion, state, bot_action)
 
         round_count += 1

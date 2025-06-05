@@ -2,6 +2,14 @@ ROUND_COUNT_LIMITS = 100
 PLAYER_DEAD_HP = 0
 BOT_DEAD_HP = 0
 
+def show_display(player_hp, player_attack, player_heal, player_block, bot_hp, bot_attack, bot_heal, bot_block, round_count):
+    print("turn -", round_count)
+    print(f"Player hp - {player_hp} | Bot hp = {bot_hp}")
+    print(f"Player attack = {player_attack} | Bot attack = {bot_attack}")
+    print(f"Player heal = {player_heal} | Bot heal = {bot_heal}")
+    print("block status", player_block)
+    print("1. Attack\n2. Heal\n3. Block\n4. Increase attack\n5. Increase heal")
+
 def cat_limits(player_hp, player_attack, player_heal, bot_hp, bot_attack, bot_heal):
 
     if player_hp > 150:
@@ -32,7 +40,9 @@ def check_end_round(round_count, player_hp, bot_hp):
         return False
     
     elif bot_hp < BOT_DEAD_HP:
+        print("you win nice")
         return False
     
     else:
+        print("you can continue")
         return True

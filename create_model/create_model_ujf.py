@@ -9,13 +9,13 @@ from sklearn.model_selection import train_test_split
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-EPOCHS = 100
-BATCH_SIZE = 1024
-LEARNING_RATE = 0.001
-MODEL_NAME = "vb_model_learn_wpa1.pth"
+EPOCHS = 10000
+BATCH_SIZE = 256
+LEARNING_RATE = 0.00001
+MODEL_NAME = "vb_model_learn_dg2_2.pth"
 MODEL_NAME_IN_JSON = "model"
 MODEL_SAVE_PATH = "../models/" + MODEL_NAME
-JSON_PATH = "../date_packs/data_1_from_player.json"
+JSON_PATH = "../date_packs/data__dg2_2.json"
 
 # model
 class BattleNet(nn.Module):
@@ -45,7 +45,7 @@ def load_or_create_model():
 
 
 def load_data_from_json(file_path):
-    with open(file_path, 'r') as f:
+    with open (file_path, 'r') as f:
         rounds = json.load(f)  
     X, y = [], []
     for round_data in rounds:
@@ -58,7 +58,6 @@ def load_data_from_json(file_path):
         ]
         action = bot["action"]
         if action <= 0:
-            print("action error:", action)
             continue
 
 
@@ -106,7 +105,8 @@ def train_model(model, X, y):
             best_loss = avg_loss
             torch.save(model.state_dict(), MODEL_SAVE_PATH)
 
-        print_status(epoch, EPOCHS, avg_loss, val_loss.item(), best_loss)
+        if epoch % 10 == 0:
+            print_status(epoch, EPOCHS, avg_loss, val_loss.item(), best_loss)
 
 if __name__ == "__main__":
     print("load date from file", JSON_PATH)

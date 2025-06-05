@@ -8,8 +8,8 @@ import json
 import sys
 import os
 
-MODELNAME = "vb_model_learn_wpa1"
-GAME_LOG_SAVE = "../game_logs/" + MODELNAME + ".json"
+MODELNAME = "vb_model_learn_dg2_2"
+GAME_LOG_SAVE = "../logs/play_log/with_player/" + MODELNAME + ".json"
 MODEL_LOAD_PATH = "../models/" + MODELNAME + ".pth"
 
 def log_game_data(player_hp, player_attack, player_heal, player_block,

@@ -6,40 +6,31 @@ import os
 import sys
 from tqdm import tqdm
 
-# Параметры модели и обучения
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-EPOCHS = 10
+EPOCHS = 30
 BATCH_SIZE = 1024
-LEARNING_RATE = 0.01
-MODEL_NAME = "vb_model_learn_dg2_3.pth"
-MODEL_NAME_IN_JSON = "model"  # Ключ в JSON, содержащий данные модели (атака, хил, блок и т.д.)
+LEARNING_RATE = 0.0001
+MODEL_NAME = "vb_model_dg2_smart_clat.pth"
+MODEL_NAME_IN_JSON = "model"
 MODEL_SAVE_PATH = os.path.join("..", "models", MODEL_NAME)
-NDJSON_PATH = os.path.join("..", "date_packs", "data__dg2_3.ndjson")
+NDJSON_PATH = os.path.join("..", "date_packs", "data_dg2_1.ndjson")
 
-# Инициализация устройства
+# init cuda
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"use device: {device}")
 
-# Определение модели
-class BattleNet(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super(BattleNet, self).__init__()
-        self.model = nn.Sequential(
-            nn.Linear(input_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, output_size)
-        )
-    def forward(self, x):
-        return self.model(x)
+# goto model file
+
+parent_dir = os.path.abspath (os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
+
+# model
+from model import Model as ModeL
 
 def load_or_create_model():
-    model = BattleNet(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE).to(device)
+    model = ModeL(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE).to(device)
     if os.path.exists(MODEL_SAVE_PATH):
         model.load_state_dict(torch.load(MODEL_SAVE_PATH, map_location=device))
         print("Model loaded from file.")
@@ -48,10 +39,7 @@ def load_or_create_model():
     return model
 
 def stream_ndjson(file_path, batch_size):
-    """
-    Потоковое чтение NDJSON-файла:
-    Каждая строка — отдельный JSON-объект, который парсится и включается в батч.
-    """
+
     X, y = [], []
     with open(file_path, "r", encoding="utf-8") as f:
         for line in f:

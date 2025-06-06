@@ -8,7 +8,15 @@ import json
 import sys
 import os
 
-MODELNAME = "vb_model_learn_dg2_3"
+# goto model file
+
+parent_dir = os.path.abspath (os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
+
+# model
+from model import Model as ModeL
+
+MODELNAME = "vb_model_dg2_smart_clat"
 GAME_LOG_SAVE = "../logs/play_log/with_player/" + MODELNAME + ".json"
 MODEL_LOAD_PATH = "../models/" + MODELNAME + ".pth"
 
@@ -41,24 +49,7 @@ def log_game_data(player_hp, player_attack, player_heal, player_block,
         json.dump(log_entry, log_file)
         log_file.write("\n")
 
-class BattleNet(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super(BattleNet, self).__init__()
-        self.model = nn.Sequential(
-            nn.Linear(input_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, output_size)
-        )
-
-    def forward(self, x):
-        return self.model(x)
-
-# Загружаем модель на GPU
-model = BattleNet(input_size=9, hidden_size=126, output_size=5).to(device)
+model = ModeL(input_size=9, hidden_size=126, output_size=5).to(device)
 model.load_state_dict(torch.load(MODEL_LOAD_PATH, map_location=device))
 model.eval()
 

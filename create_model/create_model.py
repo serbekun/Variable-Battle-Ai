@@ -7,6 +7,13 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 
+# goto model file
+
+parent_dir = os.path.abspath (os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
+
+# model
+from model import Model as ModeL
 
 def get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
     if bot_hp < 50:
@@ -70,26 +77,8 @@ def generate_game(num_rounds=100):
 
     return game_data
 
-
-class BattleNet(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super().__init__()
-        self.model = nn.Sequential(
-            nn.Linear(input_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, output_size),
-        )
-
-    def forward(self, x):
-        return self.model(x)
-
-
 def load_or_create_model(input_size, hidden_size, output_size, model_name):
-    model = BattleNet(input_size, hidden_size, output_size)
+    model = ModeL(input_size, hidden_size, output_size)
     if os.path.exists(model_name):
         model.load_state_dict(torch.load(model_name))
     return model

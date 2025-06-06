@@ -7,27 +7,20 @@ import include.vbc as vbc
 import include.vba as vba
 import json
 import os
+import sys
 
 MODELNAME = "vb_model3_con_learn_wpa"
 GAME_LOG_SAVE = f"../logs/play_logs/with_player/{MODELNAME}.json"
 MODEL_LOAD_PATH = f"../models/{MODELNAME}.pth"
 LEARN_RATE = 0.1
 
-class BattleNet(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super(BattleNet, self).__init__()
-        self.model = nn.Sequential(
-            nn.Linear(input_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, output_size)
-        )
+# goto model file
 
-    def forward(self, x):
-        return self.model(x)
+parent_dir = os.path.abspath (os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
+
+# model
+from model import Model as ModeL
 
 def log_game_data(player_hp, player_attack, player_heal, player_block,
                   bot_hp, bot_attack, bot_heal, bot_block,
@@ -83,7 +76,7 @@ def predict_action(model, state):
         _, predicted_action = torch.max(output, 1)
     return predicted_action.item()
 
-model = BattleNet(input_size=9, hidden_size=126, output_size=5)
+model = ModeL(input_size=9, hidden_size=126, output_size=5)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=LEARN_RATE)
 

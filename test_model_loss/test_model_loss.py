@@ -3,6 +3,7 @@ import torch.nn as nn
 import numpy as np
 import random
 import os
+import sys
 from tqdm import tqdm
 
 INPUT_SIZE = 9
@@ -12,6 +13,14 @@ MODEL_NAME = "vb_model_learn_dg2_2"
 MODEL_PATH = "../models/" + MODEL_NAME + ".pth"
 LOSSLOGSAVEPATH = "../logs/models_loss_log/" + MODEL_NAME + ".json"
 NUM_GAMES = 10000
+
+# goto model file
+
+parent_dir = os.path.abspath (os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
+
+# model
+from model import Model as ModeL
 
 def get_action(player_hp, bot_hp, round_count, bot_attack, bot_heal):
     if bot_hp < 50:
@@ -95,22 +104,7 @@ def prepare_data(data):
         y.append(action)
     return np.array(X), np.array(y)
 
-class BattleNet(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super(BattleNet, self).__init__()
-        self.model = nn.Sequential(
-            nn.Linear(input_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, output_size)
-        )
-    def forward(self, x):
-        return self.model(x)
-
-model = BattleNet(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE)
+model = ModeL(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE)
 model.load_state_dict(torch.load(MODEL_PATH))
 model.eval()
 

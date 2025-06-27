@@ -22,7 +22,7 @@ def append_record(record: dict):
 def get_action():
     round_count = 0
     while True:
-        round_count += 1
+        round_count    = random.randint(0, 100)
         
         player_hp      = random.randint(1, 150)
         player_attack  = random.randint(1, 100)

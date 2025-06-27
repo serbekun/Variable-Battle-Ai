@@ -16,7 +16,7 @@ sys.path.insert(0, parent_dir)
 # model
 from model import Model as ModeL
 
-MODELNAME = "vb_model_dg2_smart_clat"
+MODELNAME = "vb_model_dg2_3"
 GAME_LOG_SAVE = "../logs/play_log/with_player/" + MODELNAME + ".json"
 MODEL_LOAD_PATH = "../models/" + MODELNAME + ".pth"
 

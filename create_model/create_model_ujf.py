@@ -9,11 +9,10 @@ from tqdm import tqdm
 INPUT_SIZE = 9
 HIDDEN_SIZE = 126
 OUTPUT_SIZE = 5
-EPOCHS = 30
+EPOCHS = 500
 BATCH_SIZE = 1024
-LEARNING_RATE = 0.0001
-MODEL_NAME = "vb_model_dg2_smart_clat.pth"
-MODEL_NAME_IN_JSON = "model"
+LEARNING_RATE = 0.000001
+MODEL_NAME = "vb_model_dg2_3.pth"
 MODEL_SAVE_PATH = os.path.join("..", "models", MODEL_NAME)
 NDJSON_PATH = os.path.join("..", "date_packs", "data_dg2_1.ndjson")
 
@@ -22,8 +21,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"use device: {device}")
 
 # goto model file
-
-parent_dir = os.path.abspath (os.path.join(os.path.dirname(__file__), '..'))
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, parent_dir)
 
 # model
@@ -39,7 +37,6 @@ def load_or_create_model():
     return model
 
 def stream_ndjson(file_path, batch_size):
-
     X, y = [], []
     with open(file_path, "r", encoding="utf-8") as f:
         for line in f:
@@ -51,23 +48,34 @@ def stream_ndjson(file_path, batch_size):
             except json.JSONDecodeError as e:
                 print("JSON decode error:", e)
                 continue
-            human = round_data["human"]
-            bot = round_data[MODEL_NAME_IN_JSON]
-            input_vector = [
-                round_data["round_count"],
-                human["hp"], human["attack"], human["heal"], int(human["block"]),
-                bot["hp"], bot["attack"], bot["heal"], int(bot["block"])
-            ]
-            action = bot["action"]
-            if action <= 0:
-                continue
 
+            human = round_data["human"]
+            bot = round_data["model"]
+
+            input_vector = [
+                round_data["round"],       
+                human["hp"],               
+                human["attack"],           
+                human["heal"],             
+                int(human["block"]),       
+                bot["hp"],                 
+                bot["attack"],             
+                bot["heal"],               
+                int(bot["block"])          
+            ]
+            
+            action = bot["action"]         
+            
+            if action < 0 or action >= OUTPUT_SIZE:
+                continue
+                
             X.append(input_vector)
             y.append(action)
 
             if len(X) >= batch_size:
                 yield X, y
                 X, y = [], []
+                
         if X:
             yield X, y
 
@@ -84,6 +92,9 @@ def evaluate_model(model, file_path, batch_size, criterion, max_batches=10):
     count = 0
     with torch.no_grad():
         for X_batch, y_batch in stream_ndjson(file_path, batch_size):
+            if not X_batch:
+                continue
+                
             X_tensor = torch.tensor(X_batch, dtype=torch.float32).to(device)
             y_tensor = torch.tensor(y_batch, dtype=torch.long).to(device)
             outputs = model(X_tensor)
@@ -98,24 +109,33 @@ def train_model(model, file_path):
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
     criterion = nn.CrossEntropyLoss()
     best_loss = float('inf')
+    total_batches = sum(1 for _ in stream_ndjson(file_path, BATCH_SIZE))
 
     for epoch in range(1, EPOCHS + 1):
         model.train()
         running_loss = 0.0
         batch_count = 0
+        
+        with tqdm(stream_ndjson(file_path, BATCH_SIZE), total=total_batches, desc=f"Epoch {epoch}/{EPOCHS}") as pbar:
+            for X_batch, y_batch in pbar:
+                if not X_batch:
+                    pbar.update(1)
+                    continue
+                    
+                X_tensor = torch.tensor(X_batch, dtype=torch.float32).to(device)
+                y_tensor = torch.tensor(y_batch, dtype=torch.long).to(device)
 
-        for X_batch, y_batch in stream_ndjson(file_path, BATCH_SIZE):
-            X_tensor = torch.tensor(X_batch, dtype=torch.float32).to(device)
-            y_tensor = torch.tensor(y_batch, dtype=torch.long).to(device)
+                optimizer.zero_grad()
+                outputs = model(X_tensor)
+                loss = criterion(outputs, y_tensor)
+                loss.backward()
+                optimizer.step()
 
-            optimizer.zero_grad()
-            outputs = model(X_tensor)
-            loss = criterion(outputs, y_tensor)
-            loss.backward()
-            optimizer.step()
-
-            running_loss += loss.item()
-            batch_count += 1
+                running_loss += loss.item()
+                batch_count += 1
+                
+                pbar.set_postfix(loss=f"{loss.item():.4f}")
+                pbar.update(1)
 
         train_loss = running_loss / batch_count if batch_count > 0 else 0.0
         val_loss = evaluate_model(model, file_path, BATCH_SIZE, criterion)
@@ -123,6 +143,7 @@ def train_model(model, file_path):
         if train_loss < best_loss:
             best_loss = train_loss
             torch.save(model.state_dict(), MODEL_SAVE_PATH)
+            print(f"New best model saved with loss: {best_loss:.4f}")
 
         print_status(epoch, EPOCHS, train_loss, val_loss, best_loss)
 

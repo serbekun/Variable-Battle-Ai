@@ -1,0 +1,16 @@
+{"round_count": 0, "human": {"hp": 95, "attack": 10, "heal": 5, "block": false, "action": "4"}, "vb_model_dg2_3": {"hp": 100, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 1, "human": {"hp": 90, "attack": 10, "heal": 10, "block": false, "action": "5"}, "vb_model_dg2_3": {"hp": 100, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 2, "human": {"hp": 85, "attack": 15, "heal": 10, "block": false, "action": "4"}, "vb_model_dg2_3": {"hp": 100, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 3, "human": {"hp": 80, "attack": 15, "heal": 15, "block": false, "action": "5"}, "vb_model_dg2_3": {"hp": 100, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 4, "human": {"hp": 75, "attack": 20, "heal": 15, "block": false, "action": "4"}, "vb_model_dg2_3": {"hp": 100, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 5, "human": {"hp": 70, "attack": 20, "heal": 15, "block": false, "action": "1"}, "vb_model_dg2_3": {"hp": 80, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 6, "human": {"hp": 65, "attack": 20, "heal": 15, "block": false, "action": "1"}, "vb_model_dg2_3": {"hp": 60, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 7, "human": {"hp": 60, "attack": 20, "heal": 15, "block": false, "action": ""}, "vb_model_dg2_3": {"hp": 60, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 8, "human": {"hp": 55, "attack": 20, "heal": 15, "block": false, "action": ""}, "vb_model_dg2_3": {"hp": 60, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 9, "human": {"hp": 50, "attack": 25, "heal": 15, "block": false, "action": "4"}, "vb_model_dg2_3": {"hp": 60, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 10, "human": {"hp": 45, "attack": 25, "heal": 20, "block": false, "action": "5"}, "vb_model_dg2_3": {"hp": 60, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 11, "human": {"hp": 40, "attack": 30, "heal": 20, "block": false, "action": "4"}, "vb_model_dg2_3": {"hp": 60, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 12, "human": {"hp": 35, "attack": 30, "heal": 25, "block": false, "action": "5"}, "vb_model_dg2_3": {"hp": 60, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 13, "human": {"hp": 30, "attack": 35, "heal": 25, "block": false, "action": "4"}, "vb_model_dg2_3": {"hp": 60, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 14, "human": {"hp": 25, "attack": 35, "heal": 25, "block": false, "action": "1"}, "vb_model_dg2_3": {"hp": 25, "attack": 5, "heal": 5, "block": false, "action": 0}}
+{"round_count": 15, "human": {"hp": 20, "attack": 35, "heal": 25, "block": false, "action": "1"}, "vb_model_dg2_3": {"hp": -10, "attack": 5, "heal": 5, "block": false, "action": 0}}

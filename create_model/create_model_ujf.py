@@ -12,7 +12,7 @@ OUTPUT_SIZE = 5
 EPOCHS = 500
 BATCH_SIZE = 1024
 LEARNING_RATE = 0.000001
-MODEL_NAME = "vb_model_dg2_3.pth"
+MODEL_NAME = "vb_model_dg2_4.pth"
 MODEL_SAVE_PATH = os.path.join("..", "models", MODEL_NAME)
 NDJSON_PATH = os.path.join("..", "date_packs", "data_dg2_1.ndjson")
 

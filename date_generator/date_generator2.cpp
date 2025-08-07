@@ -7,6 +7,7 @@
 #include <mutex>
 #include <filesystem>
 #include <cmath>
+#include <cstring>
 
 namespace fs = std::filesystem;
 
@@ -20,6 +21,14 @@ constexpr int BATCH_SIZE = 1024;
 std::mutex file_mutex;
 std::atomic<int64_t> records_generated(0);
 std::ofstream out_file;
+
+enum class AIStyle {
+    Balanced,
+    Aggressive,
+    Defensive
+};
+
+AIStyle g_ai_style = AIStyle::Balanced;
 
 struct ThreadRNG {
     std::mt19937 engine;
@@ -35,18 +44,22 @@ struct ThreadRNG {
     }
 };
 
-int choose_action(int hp, int enemy_hp, int last_action, ThreadRNG& trng) {
+int choose_action(int hp, int enemy_hp, int last_action, ThreadRNG& trng, AIStyle style) {
     std::vector<int> weights;
 
-    if (hp < 30) {
-        if (enemy_hp < 40) weights = {40, 10, 10, 30, 10};
-        else weights = {10, 25, 50, 5, 10};
-    }
-    else if (hp > enemy_hp + 30) {
-        weights = {50, 15, 5, 25, 5};
-    }
-    else {
-        weights = {35, 20, 20, 15, 10};
+    if (style == AIStyle::Aggressive) {
+        weights = {50, 10, 5, 25, 10};
+    } else if (style == AIStyle::Defensive) {
+        weights = {10, 30, 30, 10, 20};
+    } else {
+        if (hp < 30) {
+            if (enemy_hp < 40) weights = {40, 10, 10, 30, 10};
+            else weights = {10, 25, 50, 5, 10};
+        } else if (hp > enemy_hp + 30) {
+            weights = {50, 15, 5, 25, 5};
+        } else {
+            weights = {35, 20, 20, 15, 10};
+        }
     }
 
     if (last_action == 1) {
@@ -79,10 +92,10 @@ void simulate_battle(std::vector<std::string>& buffer, ThreadRNG& trng) {
     while (human_hp > 0 && model_hp > 0 && round_count <= MAX_ROUNDS) {
 
         int human_action = choose_action(
-            human_hp, model_hp, last_human_action, trng
+            human_hp, model_hp, last_human_action, trng, g_ai_style
         );
         int model_action = choose_action(
-            model_hp, human_hp, last_model_action, trng
+            model_hp, human_hp, last_model_action, trng, g_ai_style
         );
 
         bool human_block = (human_action == 1);
@@ -197,7 +210,29 @@ void worker() {
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    for (int i = 1; i < argc; ++i) {
+        if (std::strncmp(argv[i], "--style=", 8) == 0) {
+            std::string style_arg = argv[i] + 8;
+            if (style_arg == "aggressive") {
+                g_ai_style = AIStyle::Aggressive;
+            } else if (style_arg == "defensive") {
+                g_ai_style = AIStyle::Defensive;
+            } else if (style_arg == "balanced") {
+                g_ai_style = AIStyle::Balanced;
+            } else {
+                std::cerr << "Unknown style: " << style_arg << std::endl;
+                return 1;
+            }
+        }
+    }
+
+    std::cout << "AI style set to: ";
+    switch (g_ai_style) {
+        case AIStyle::Aggressive: std::cout << "Aggressive\n"; break;
+        case AIStyle::Defensive: std::cout << "Defensive\n"; break;
+        default: std::cout << "Balanced\n"; break;
+    }
 
     fs::create_directories(DATA_SET_SAVE_PATH);
 

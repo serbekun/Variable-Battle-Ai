@@ -1,5 +1,13 @@
 # Variable Battle AI
 
+## How was created code
+The code was written during training, so it's messy, experimental, and may contain non-working parts.  
+Use at your own risk — or for your own amusement.
+
+## License
+This project is licensed under the Do What The Fuck You Want To Public License (WTFPL) — see the LICENSE file for details.
+
+
 Variable Battle AI is a neural network-powered bot designed to play the text-based game Variable Battle. It utilizes PyTorch for deep learning and logs gameplay data for further training and analysis.
 
 ## Features

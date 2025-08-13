@@ -177,10 +177,6 @@ Displays the current game state.
 
 Feel free to contribute by submitting issues, feature requests, or pull requests.
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Author
 
 Developed by [serbekun](https://github.com/serbekun).
